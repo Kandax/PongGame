@@ -2,13 +2,17 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <array>
+#include <stdlib.h>
 
 
 #include "SFML/Graphics.hpp"
 
 #include "ElapsedTime.h"
 
-
+#include "BoundingBox.h"
+#include "Ball.h"
+#include "Player.h"
 
 class Game
 {
@@ -23,6 +27,9 @@ private:
 	void update();
 	void render();
 
+	bool isColliding(const BoundingBox& firstBoundingBox, const BoundingBox& secondBoundingBox);
+	void restart();
+
 private:
 
 	uint16_t mWindowWidth;
@@ -33,11 +40,14 @@ private:
 	sf::Event mEvent;
 	ElapsedTime mETime;
 
+	Ball mBall;
+	Player mPlayerLeft,mPlayerRight;
+
+	bool mStartHorizontalDirectionBall;
+	float mStartVerticalDirectionBall;
 
 
-
-
-
+	BoundingBox mBBLeft, mBBRight, mBBTop, mBBBottom;
 
 };
 

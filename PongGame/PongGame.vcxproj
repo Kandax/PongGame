@@ -145,11 +145,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\ElapsedTime.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Ball.h" />
+    <ClInclude Include="src\BoundingBox.h" />
     <ClInclude Include="src\ElapsedTime.h" />
     <ClInclude Include="src\Game.h" />
   </ItemGroup>
