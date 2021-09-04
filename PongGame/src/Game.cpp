@@ -75,10 +75,10 @@ void Game::input()
 
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-		mPlayerLeft.move(0,-mPlayerLeft.getSpeed());
+			mPlayerLeft.move(0,-mPlayerLeft.getSpeed());
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-		mPlayerLeft.move(0,mPlayerLeft.getSpeed() );
+			mPlayerLeft.move(0,mPlayerLeft.getSpeed() );
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
@@ -98,13 +98,42 @@ void Game::input()
 void Game::updatePhysics()
 {
 
-		if (isColliding(mBall.getBoundingBox(), mBBTop) || isColliding(mBall.getBoundingBox(), mBBBottom)) {
-			mBall.setDirection(mBall.getHorizontalDir(), -mBall.getVerticalDir());
-			std::cout << "ball dir H: " << mBall.getHorizontalDir() << " V: " << mBall.getVerticalDir() << std::endl;
-			
-		}
+	if (isColliding(mBall.getBoundingBox(), mBBTop) || isColliding(mBall.getBoundingBox(), mBBBottom)){
+		mBall.setDirection(mBall.getHorizontalDir(), -mBall.getVerticalDir());
+		std::cout << "ball dir H: " << mBall.getHorizontalDir() << " V: " << mBall.getVerticalDir() << std::endl;
 		
-	
+	}
+		
+	if (isColliding(mBall.getBoundingBox(), mPlayerRight.getBoundingBox())) {
+		std::cout << "cum" << std::endl;
+		if (mBall.getCenterPosition().y > mPlayerRight.getCenterPosition().y) {
+			if (mBall.getVerticalDir() > 0)
+				mBall.setDirection(-mBall.getHorizontalDir(), mBall.getVerticalDir());
+			else
+				mBall.setDirection(-mBall.getHorizontalDir(), -mBall.getVerticalDir());
+		}
+		else {
+			if (mBall.getVerticalDir() > 0)
+				mBall.setDirection(-mBall.getHorizontalDir(),-mBall.getVerticalDir());
+			else
+				mBall.setDirection(-mBall.getHorizontalDir(), mBall.getVerticalDir());
+		}
+	}
+	if (isColliding(mBall.getBoundingBox(), mPlayerLeft.getBoundingBox())) {
+		std::cout << "cum blue" << std::endl;
+		if (mBall.getCenterPosition().y > mPlayerLeft.getCenterPosition().y) {
+			if (mBall.getVerticalDir() > 0)
+				mBall.setDirection(-mBall.getHorizontalDir(), mBall.getVerticalDir());
+			else
+				mBall.setDirection(-mBall.getHorizontalDir(), -mBall.getVerticalDir());
+		}
+		else {
+			if (mBall.getVerticalDir() > 0)
+				mBall.setDirection(-mBall.getHorizontalDir(), -mBall.getVerticalDir());
+			else
+				mBall.setDirection(-mBall.getHorizontalDir(), mBall.getVerticalDir());
+		}
+	}
 
 
 }
@@ -112,6 +141,18 @@ void Game::updatePhysics()
 void Game::update()
 {
 	mBall.move(mBall.getHorizontalDir() * mBall.getSpeed() , mBall.getVerticalDir() * mBall.getSpeed() );
+
+	if (mPlayerLeft.getPositionY() < 0)
+		mPlayerLeft.setPosition(mPlayerLeft.getPositionX(), 0);
+	if (mPlayerLeft.getPositionY() > mWindowHeight - mPlayerLeft.getHeight())
+		mPlayerLeft.setPosition(mPlayerLeft.getPositionX(), mWindowHeight - mPlayerLeft.getHeight());
+
+	if (mPlayerRight.getPositionY() < 0)
+		mPlayerRight.setPosition(mPlayerRight.getPositionX(), 0);
+	if (mPlayerRight.getPositionY() > mWindowHeight - mPlayerRight.getHeight())
+		mPlayerRight.setPosition(mPlayerRight.getPositionX(), mWindowHeight - mPlayerRight.getHeight());
+
+
 
 
 	mBall.update();

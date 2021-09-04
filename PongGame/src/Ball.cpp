@@ -53,6 +53,9 @@ void Ball::update()
 	mBoundingBox.lowerBound.y = mPositionY;
 	mBoundingBox.upperBound.x = mPositionX + mBoxSize;
 	mBoundingBox.upperBound.y = mPositionY + mBoxSize;
+
+	mCenterPosition.x = mPositionX + mBoxSize / 2;
+	mCenterPosition.y = mPositionY + mBoxSize / 2;
 }
 
 void Ball::setPosition(float x, float y)
@@ -61,37 +64,42 @@ void Ball::setPosition(float x, float y)
 	mPositionY = y;
 }
 
-BoundingBox Ball::getBoundingBox()
+BoundingBox Ball::getBoundingBox() 
 {
 	return mBoundingBox;
 }
 
-float Ball::getPositionX()
+float Ball::getPositionX() const
 {
 	return mPositionX;
 }
 
-float Ball::getPositionY()
+float Ball::getPositionY() const
 {
 	return mPositionY;
 }
 
-float Ball::getSpeed()
+float Ball::getSpeed() const
 {
 	return mSpeed;
 }
 
-float Ball::getVerticalDir()
+float Ball::getVerticalDir() const
 {
 	return mDirVertical;
 }
 
-float Ball::getHorizontalDir()
+float Ball::getHorizontalDir() const
 {
 	return mDirHorizontal;
 }
 
-float Ball::getSize()
+float Ball::getSize() const
 {
 	return mBoxSize;
+}
+
+sf::Vector2f Ball::getCenterPosition() const
+{
+	return mCenterPosition;
 }

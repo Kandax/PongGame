@@ -19,12 +19,14 @@ public:
 
 
 	BoundingBox getBoundingBox();
-	float getPositionX();
-	float getPositionY();
-	float getSpeed();
-	float getVerticalDir();
-	float getHorizontalDir();
-	float getSize();
+	float getPositionX() const;
+	float getPositionY() const;
+	float getSpeed() const;
+	float getVerticalDir() const;
+	float getHorizontalDir() const;
+	float getSize() const;
+	sf::Vector2f getCenterPosition() const;
+
 private:
 	float mPositionX;
 	float mPositionY;
@@ -33,7 +35,7 @@ private:
 	float mDirHorizontal;
 	float mRadius;
 	float mBoxSize;
-
+	sf::Vector2f mCenterPosition;
 
 
 
