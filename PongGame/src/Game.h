@@ -4,6 +4,7 @@
 #include <vector>
 #include <array>
 #include <stdlib.h>
+#include <math.h>
 
 
 #include "SFML/Graphics.hpp"

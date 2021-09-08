@@ -100,40 +100,64 @@ void Game::updatePhysics()
 
 	if (isColliding(mBall.getBoundingBox(), mBBTop) || isColliding(mBall.getBoundingBox(), mBBBottom)){
 		mBall.setDirection(mBall.getHorizontalDir(), -mBall.getVerticalDir());
-		std::cout << "ball dir H: " << mBall.getHorizontalDir() << " V: " << mBall.getVerticalDir() << std::endl;
+		//std::cout << "ball dir H: " << mBall.getHorizontalDir() << " V: " << mBall.getVerticalDir() << std::endl;
 		
 	}
 		
+	float disBallAndPlayerR = std::sqrt(std::pow(mBall.getCenterPosition().y - mPlayerRight.getCenterPosition().y, 2));
+
+	//std::cout << "dis ball and player R: " << disBallAndPlayerR << std::endl;
+
+
+	float percOfDisR = (disBallAndPlayerR) / (mPlayerRight.getHeight() / 2);
+	//std::cout << "perc of dis R: " << percOfDisR << std::endl;
+
+
+	float disBallAndPlayerL = std::sqrt(std::pow(mBall.getCenterPosition().y - mPlayerLeft.getCenterPosition().y, 2));
+
+	std::cout << "dis ball and player L: " << disBallAndPlayerL << std::endl;
+
+
+	float percOfDisL = (disBallAndPlayerL) / (mPlayerLeft.getHeight() / 2);
+	std::cout << "perc of dis L: " << percOfDisL << std::endl;
+
+
+
+
+
+
 	if (isColliding(mBall.getBoundingBox(), mPlayerRight.getBoundingBox())) {
 		std::cout << "cum" << std::endl;
 		if (mBall.getCenterPosition().y > mPlayerRight.getCenterPosition().y) {
 			if (mBall.getVerticalDir() > 0)
-				mBall.setDirection(-mBall.getHorizontalDir(), mBall.getVerticalDir());
+				mBall.setDirection(-mBall.getHorizontalDir(), percOfDisR);
 			else
-				mBall.setDirection(-mBall.getHorizontalDir(), -mBall.getVerticalDir());
+				mBall.setDirection(-mBall.getHorizontalDir(), percOfDisR);
 		}
 		else {
 			if (mBall.getVerticalDir() > 0)
-				mBall.setDirection(-mBall.getHorizontalDir(),-mBall.getVerticalDir());
+				mBall.setDirection(-mBall.getHorizontalDir(), -percOfDisR);
 			else
-				mBall.setDirection(-mBall.getHorizontalDir(), mBall.getVerticalDir());
+				mBall.setDirection(-mBall.getHorizontalDir(), -percOfDisR);
 		}
 	}
 	if (isColliding(mBall.getBoundingBox(), mPlayerLeft.getBoundingBox())) {
 		std::cout << "cum blue" << std::endl;
-		if (mBall.getCenterPosition().y > mPlayerLeft.getCenterPosition().y) {
-			if (mBall.getVerticalDir() > 0)
-				mBall.setDirection(-mBall.getHorizontalDir(), mBall.getVerticalDir());
-			else
-				mBall.setDirection(-mBall.getHorizontalDir(), -mBall.getVerticalDir());
+		if (mBall.getCenterPosition().y > mPlayerLeft.getCenterPosition().y) {//below center of paddle
+			if (mBall.getVerticalDir() > 0)//direction down
+				mBall.setDirection(-mBall.getHorizontalDir(), percOfDisL);// dir right down
+			else //direction up
+				mBall.setDirection(-mBall.getHorizontalDir(), percOfDisL);//dir right down
 		}
-		else {
-			if (mBall.getVerticalDir() > 0)
-				mBall.setDirection(-mBall.getHorizontalDir(), -mBall.getVerticalDir());
-			else
-				mBall.setDirection(-mBall.getHorizontalDir(), mBall.getVerticalDir());
+		else {// on top center of paddle
+			if (mBall.getVerticalDir() > 0)//direction down
+				mBall.setDirection(-mBall.getHorizontalDir(), -percOfDisL);
+			else//direction up
+				mBall.setDirection(-mBall.getHorizontalDir(), -percOfDisL);
 		}
 	}
+
+	
 
 
 }
