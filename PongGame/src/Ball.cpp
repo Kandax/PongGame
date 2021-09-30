@@ -3,7 +3,7 @@
 Ball::Ball()
 	: mPositionX(0)
 	, mPositionY(0)
-	, mSpeed(2)
+	, mSpeed(5)
 	, mDirVertical(0)
 	, mDirHorizontal(0)
 	, mRadius(32)
@@ -62,6 +62,11 @@ void Ball::setPosition(float x, float y)
 {
 	mPositionX = x;
 	mPositionY = y;
+}
+
+void Ball::setSpeed(float speed)
+{
+	mSpeed = speed;
 }
 
 BoundingBox Ball::getBoundingBox() 

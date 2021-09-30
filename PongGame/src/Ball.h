@@ -15,7 +15,7 @@ public:
 	void update();
 
 	void setPosition(float x, float y);
-
+	void setSpeed(float speed);
 
 
 	BoundingBox getBoundingBox();
