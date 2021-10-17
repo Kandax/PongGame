@@ -7,16 +7,17 @@ class Ball
 {
 public:
 	Ball();
-	Ball(float posX, float posY, float radius);
+	Ball(float posX, float posY);
 	void draw(sf::RenderWindow* window);
 	
 	void move(float x, float y);
 	void setDirection(float horizontal,float vertical);
 	void update();
+	void resetAcceleration();
 
 	void setPosition(float x, float y);
 	void setSpeed(float speed);
-
+	void setAcceleration(float acceleration);
 
 	BoundingBox getBoundingBox();
 	float getPositionX() const;
@@ -26,23 +27,26 @@ public:
 	float getHorizontalDir() const;
 	float getSize() const;
 	sf::Vector2f getCenterPosition() const;
+	float getAcceleration() const;
 
 private:
+	const float cAcceleration;
+
 	float mPositionX;
 	float mPositionY;
 	float mSpeed;
 	float mDirVertical;
 	float mDirHorizontal;
-	float mRadius;
 	float mBoxSize;
+	float mAcceleration;
 	sf::Vector2f mCenterPosition;
 
 
 
 	BoundingBox mBoundingBox;
 
-	//sf::CircleShape mShape;
 	sf::RectangleShape mShape;
+
 
 
 };

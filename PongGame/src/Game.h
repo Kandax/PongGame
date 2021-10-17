@@ -14,6 +14,7 @@
 #include "BoundingBox.h"
 #include "Ball.h"
 #include "Player.h"
+#include "PowerUp.h"
 
 class Game
 {
@@ -49,6 +50,12 @@ private:
 
 
 	BoundingBox mBBLeft, mBBRight, mBBTop, mBBBottom;
+
+	PowerUp mPowerUp;
+
+	const float kPlayerSpeed;
+
+
 
 };
 

@@ -1,29 +1,30 @@
 #include "Ball.h"
 
 Ball::Ball()
-	: mPositionX(0)
+	: cAcceleration(0.5)
+	, mPositionX(0)
 	, mPositionY(0)
 	, mSpeed(5)
 	, mDirVertical(0)
 	, mDirHorizontal(0)
-	, mRadius(32)
 	, mBoxSize(32)
-	,mBoundingBox{sf::Vector2f(mPositionX,mPositionY), sf::Vector2f(mPositionX + mBoxSize,mPositionY + mBoxSize)}
-	//,mShape(mRadius)
-	,mShape(sf::Vector2f(mBoxSize, mBoxSize))
+	, mAcceleration(cAcceleration)
+	, mBoundingBox{ sf::Vector2f(mPositionX,mPositionY), sf::Vector2f(mPositionX + mBoxSize,mPositionY + mBoxSize) }
+	, mShape(sf::Vector2f(mBoxSize, mBoxSize))
 {
-	//mShape.setFillColor(sf::Color::Red);
+	mShape.setFillColor(sf::Color::Magenta);
 }
 
-Ball::Ball(float posX, float posY, float radius)
-	: mPositionX(posX)
+Ball::Ball(float posX, float posY)
+	: cAcceleration(0.5)
+	, mPositionX(posX)
 	, mPositionY(posY)
 	, mSpeed(20)
 	, mDirVertical(0)
 	, mDirHorizontal(0)
-	, mRadius(radius)
-	, mBoundingBox{ sf::Vector2f(mPositionX,mPositionY), sf::Vector2f(mPositionX + 2 * mRadius,mPositionY + 2 * mRadius) }
-	//, mShape(mRadius)
+	, mBoxSize(32)
+	, mAcceleration(cAcceleration)
+	, mBoundingBox{ sf::Vector2f(mPositionX,mPositionY), sf::Vector2f(mPositionX + 2 * mBoxSize,mPositionY + 2 * mBoxSize) }
 {
 }
 
@@ -58,6 +59,11 @@ void Ball::update()
 	mCenterPosition.y = mPositionY + mBoxSize / 2;
 }
 
+void Ball::resetAcceleration()
+{
+	mAcceleration = cAcceleration;
+}
+
 void Ball::setPosition(float x, float y)
 {
 	mPositionX = x;
@@ -67,6 +73,11 @@ void Ball::setPosition(float x, float y)
 void Ball::setSpeed(float speed)
 {
 	mSpeed = speed;
+}
+
+void Ball::setAcceleration(float acceleration)
+{
+	mAcceleration = acceleration;
 }
 
 BoundingBox Ball::getBoundingBox() 
@@ -107,4 +118,9 @@ float Ball::getSize() const
 sf::Vector2f Ball::getCenterPosition() const
 {
 	return mCenterPosition;
+}
+
+float Ball::getAcceleration() const
+{
+	return mAcceleration;
 }
