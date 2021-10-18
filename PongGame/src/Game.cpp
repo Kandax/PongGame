@@ -19,6 +19,11 @@ Game::Game()
 	, mBBTop{ sf::Vector2f(0,-10), sf::Vector2f(mWindowWidth,0) }
 	, mBBBottom{ sf::Vector2f(0,mWindowHeight), sf::Vector2f(mWindowWidth,mWindowHeight + 10) }
 	, kPlayerSpeed(10)
+	, mFont()
+	, mScoreTextBlue()
+	, mScoreTextRed()
+	, mPointsBlue(0)
+	, mPointsRed(0)
 {
 	
 	mPlayerRight.getShape()->setFillColor(sf::Color::Red);
@@ -30,6 +35,20 @@ Game::Game()
 
 	std::cout << "ball dir H: " << mBall.getHorizontalDir() << " V: " << mBall.getVerticalDir() << std::endl;
 
+	mFont.loadFromFile("fonts\\Roboto-Thin.ttf");
+
+	mScoreTextBlue.setFont(mFont);
+	mScoreTextBlue.setString("00");
+	mScoreTextBlue.setCharacterSize(72);
+	mScoreTextBlue.setPosition(sf::Vector2f(mWindowWidth / 2 - 100, 0));
+
+	mScoreTextRed.setFont(mFont);
+	mScoreTextRed.setString("00");
+	mScoreTextRed.setCharacterSize(72);
+	mScoreTextRed.setPosition(sf::Vector2f(mWindowWidth / 2  + 20, 0));
+
+
+
 
 	mPowerUp.setTexture("powerUP0.png", PowerUp::none);
 	mPowerUp.setTexture("powerUP1.png", PowerUp::speedUpBall);
@@ -40,6 +59,7 @@ Game::Game()
 	mPlayerLeft.update();
 	mPlayerRight.update();
 	mPowerUp.update();
+
 
 
 }
@@ -120,8 +140,36 @@ void Game::updatePhysics()
 		//std::cout << "ball dir H: " << mBall.getHorizontalDir() << " V: " << mBall.getVerticalDir() << std::endl;
 		
 	}
-	//if ball touch left or right wall restart game
-	if (isColliding(mBall.getBoundingBox(), mBBLeft) || isColliding(mBall.getBoundingBox(), mBBRight)) {
+	//if ball touch left wall add point to the red player and restart game
+	if (isColliding(mBall.getBoundingBox(), mBBLeft)) {
+		mPointsRed++;
+
+		std::cout << "red points: " << (int)mPointsRed << std::endl;
+
+		if (mPointsRed < 10) {
+			mScoreTextRed.setString("0" + std::to_string(mPointsRed));
+		}
+		else {
+			mScoreTextRed.setString(std::to_string(mPointsRed));
+		}
+
+		restart();
+	}
+
+
+	//if ball touch left wall add point to the blue player and restart game
+	if (isColliding(mBall.getBoundingBox(), mBBRight)) {
+		mPointsBlue++;
+
+		std::cout << "blue points: " << (int)mPointsBlue<< std::endl;		
+
+		if (mPointsBlue < 10) {
+			mScoreTextBlue.setString("0" + std::to_string(mPointsBlue));
+		}
+		else {
+			mScoreTextBlue.setString(std::to_string(mPointsBlue));
+		}
+
 		restart();
 	}
 
@@ -305,12 +353,13 @@ void Game::render()
 	}
 
 
-
-
 	mBall.draw(&mWindow);
 	mPlayerLeft.draw(&mWindow);
 	mPlayerRight.draw(&mWindow);
 	mPowerUp.draw(&mWindow);
+
+	mWindow.draw(mScoreTextBlue);
+	mWindow.draw(mScoreTextRed);
 	mWindow.display();
 
 

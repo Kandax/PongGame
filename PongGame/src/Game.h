@@ -55,6 +55,12 @@ private:
 
 	const float kPlayerSpeed;
 
+	sf::Font mFont;
+	sf::Text mScoreTextBlue;
+	sf::Text mScoreTextRed;
+
+	int8_t mPointsBlue;
+	int8_t mPointsRed;
 
 
 };
