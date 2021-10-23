@@ -15,6 +15,7 @@
 #include "Ball.h"
 #include "Player.h"
 #include "PowerUp.h"
+#include "GamemodeTwoPlayers.h"
 
 class Game
 {
@@ -22,18 +23,14 @@ public:
 	Game();
 	~Game();
 	void run();
-private:
+protected:
 	void events();
 	void input();
 	void updatePhysics();
 	void update();
 	void render();
 
-	bool isColliding(const BoundingBox& firstBoundingBox, const BoundingBox& secondBoundingBox);
-	void restart();
-
 private:
-
 	uint16_t mWindowWidth;
 	uint16_t mWindowHeight;
 	std::string mWindowName;
@@ -41,27 +38,9 @@ private:
 	sf::RenderWindow mWindow;
 	sf::Event mEvent;
 	ElapsedTime mETime;
+	
 
-	Ball mBall;
-	Player mPlayerLeft,mPlayerRight;
-
-	bool mStartHorizontalDirectionBall;
-	float mStartVerticalDirectionBall;
-
-
-	BoundingBox mBBLeft, mBBRight, mBBTop, mBBBottom;
-
-	PowerUp mPowerUp;
-
-	const float kPlayerSpeed;
-
-	sf::Font mFont;
-	sf::Text mScoreTextBlue;
-	sf::Text mScoreTextRed;
-
-	int8_t mPointsBlue;
-	int8_t mPointsRed;
-
+	GamemodeTwoPlayers mGM2P;
 
 };
 
