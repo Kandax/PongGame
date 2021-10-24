@@ -11,10 +11,17 @@ Game::Game()
 	, mWindowHeight(600)
 	, mWindowName("Pong Game")
 	, mWindow(sf::VideoMode(mWindowWidth, mWindowHeight), mWindowName)
-	, mEvent()	
+	, mEvent()
+	, mMenuChoice(0)
+	, mButton1(mWindowWidth / 2 - 100, 100, 200, 50, "Play")
 	, mGM2P(&mWindow, mWindowWidth,mWindowHeight)
+
 {
-	
+	mFont.loadFromFile("fonts\\Roboto-Thin.ttf");
+	mText.setFont(mFont);
+	mText.setString(mButton1.text);
+	mText.setPosition(mButton1.posX + 70, mButton1.posY + 5);
+	mButton1.shape.setFillColor(sf::Color::Color(100, 100, 100));
 	mGM2P.Init();
 
 }
@@ -55,26 +62,110 @@ void Game::events()
 void Game::input()
 {
 
-	mGM2P.input();
+	switch (mMenuChoice)
+	{
+	case 0:
+		//input menu
+		if (isColliding(mButton1.boundingBox, sf::Mouse::getPosition(mWindow).x, sf::Mouse::getPosition(mWindow).y) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+			std::cout << "button1" << std::endl;
+			mMenuChoice = 1;
+		}
+		break;
+	case 1:
+		mGM2P.input();
+		break;
+
+	default:
+		std::cout << "mMenuChoice out of bounds" << std::endl;
+		break;
+	}
+
+
 
 }
 
 void Game::updatePhysics()
 {
-	
-	mGM2P.updatePhysics(mETime.getTimeUsed());
+	switch (mMenuChoice)
+	{
+	case 0:
+		//update physics menu
+		//nothing gonna will be there
+		break;
+	case 1:
+		mGM2P.updatePhysics(mETime.getTimeUsed());
+		break;
+
+	default:
+		break;
+	}
+
+
 }
 
 void Game::update()
 {
-	
-	mGM2P.update(mETime.getTimeUsed());
+	switch (mMenuChoice)
+	{
+	case 0:
+		//update  menu
+		break;
+	case 1:
+		mGM2P.update(mETime.getTimeUsed());
+		break;
+
+	default:
+		break;
+	}
 }
 
 void Game::render()
 {
 	
 	mWindow.clear();
-	mGM2P.render();
+
+	switch (mMenuChoice)
+	{
+	case 0:
+		//render menu
+		mWindow.draw(mButton1.shape);
+		mWindow.draw(mText);
+		
+		break;
+	case 1:
+		mGM2P.render();
+		break;
+
+	default:
+		break;
+	}
+	
 	mWindow.display();
+}
+
+bool Game::isColliding(const BoundingBox& boundingBox, float pointX, float pointY)
+{
+	if (pointX > boundingBox.lowerBound.x && pointX < boundingBox.upperBound.x
+		&& pointY > boundingBox.lowerBound.y && pointY < boundingBox.upperBound.y) {
+		return true;
+	}
+	else {
+		return false;
+	}
+		
+}
+
+Game::Button::Button(float posX, float posY, uint16_t boxWidth, uint16_t boxHeight, std::string text)
+{
+	this->posX = posX;
+	this->posY = posY;
+	this->boxWidth = boxWidth;
+	this->boxHeight = boxHeight;
+	this->boundingBox.lowerBound.x = this->posX;
+	this->boundingBox.lowerBound.y = this->posY;
+	this->boundingBox.upperBound.x = this->posX + this->boxWidth;
+	this->boundingBox.upperBound.y = this->posY + this->boxHeight;
+	this->shape.setSize(sf::Vector2f(boxWidth, boxHeight));
+	this->shape.setPosition(sf::Vector2f(posX, posY));
+	this->text = text;
 }

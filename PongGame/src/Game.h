@@ -19,16 +19,36 @@
 
 class Game
 {
+private:
+	struct Button
+	{
+		Button(float posX, float posY, uint16_t boxWidth, uint16_t boxHeight, std::string text);
+
+		float posX;
+		float posY;
+		uint16_t boxWidth;
+		uint16_t boxHeight;
+		BoundingBox boundingBox;
+		sf::RectangleShape shape;
+		std::string text;
+
+	};
+
+
+
+
 public:
 	Game();
 	~Game();
 	void run();
-protected:
+private:
 	void events();
 	void input();
 	void updatePhysics();
 	void update();
 	void render();
+
+	bool isColliding(const BoundingBox& boundingBox, float pointX,float pointY);
 
 private:
 	uint16_t mWindowWidth;
@@ -39,6 +59,11 @@ private:
 	sf::Event mEvent;
 	ElapsedTime mETime;
 	
+	int mMenuChoice;
+	Button mButton1;
+
+	sf::Font mFont;
+	sf::Text mText;
 
 	GamemodeTwoPlayers mGM2P;
 

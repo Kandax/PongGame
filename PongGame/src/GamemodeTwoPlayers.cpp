@@ -44,7 +44,7 @@ void GamemodeTwoPlayers::Init()
 
 	restart();
 
-	std::cout << "ball dir H: " << mBall.getHorizontalDir() << " V: " << mBall.getVerticalDir() << std::endl;
+	//std::cout << "ball dir H: " << mBall.getHorizontalDir() << " V: " << mBall.getVerticalDir() << std::endl;
 
 	mFont.loadFromFile("fonts\\Roboto-Thin.ttf");
 
