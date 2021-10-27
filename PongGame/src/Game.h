@@ -15,9 +15,28 @@
 #include "Ball.h"
 #include "Player.h"
 #include "PowerUp.h"
+#include "GamemodeTwoPlayers.h"
 
 class Game
 {
+private:
+	struct Button
+	{
+		Button(float posX, float posY, uint16_t boxWidth, uint16_t boxHeight, std::string text);
+
+		float posX;
+		float posY;
+		uint16_t boxWidth;
+		uint16_t boxHeight;
+		BoundingBox boundingBox;
+		sf::RectangleShape shape;
+		std::string text;
+
+	};
+
+
+
+
 public:
 	Game();
 	~Game();
@@ -29,11 +48,9 @@ private:
 	void update();
 	void render();
 
-	bool isColliding(const BoundingBox& firstBoundingBox, const BoundingBox& secondBoundingBox);
-	void restart();
+	bool isColliding(const BoundingBox& boundingBox, float pointX,float pointY);
 
 private:
-
 	uint16_t mWindowWidth;
 	uint16_t mWindowHeight;
 	std::string mWindowName;
@@ -41,27 +58,14 @@ private:
 	sf::RenderWindow mWindow;
 	sf::Event mEvent;
 	ElapsedTime mETime;
-
-	Ball mBall;
-	Player mPlayerLeft,mPlayerRight;
-
-	bool mStartHorizontalDirectionBall;
-	float mStartVerticalDirectionBall;
-
-
-	BoundingBox mBBLeft, mBBRight, mBBTop, mBBBottom;
-
-	PowerUp mPowerUp;
-
-	const float kPlayerSpeed;
+	
+	int mMenuChoice;
+	Button mButton1;
 
 	sf::Font mFont;
-	sf::Text mScoreTextBlue;
-	sf::Text mScoreTextRed;
+	sf::Text mText;
 
-	int8_t mPointsBlue;
-	int8_t mPointsRed;
-
+	GamemodeTwoPlayers mGM2P;
 
 };
 
