@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GamemodePlayerBot.cpp" />
     <ClCompile Include="src\GamemodeTwoPlayers.cpp" />
     <ClCompile Include="src\PowerUp.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GamemodePlayerBot.h" />
     <ClInclude Include="src\GamemodeTwoPlayers.h" />
     <ClInclude Include="src\PowerUp.h" />
     <ClInclude Include="src\Player.h" />

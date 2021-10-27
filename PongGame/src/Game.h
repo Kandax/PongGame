@@ -16,6 +16,7 @@
 #include "Player.h"
 #include "PowerUp.h"
 #include "GamemodeTwoPlayers.h"
+#include "GamemodePlayerBot.h"
 
 class Game
 {
@@ -66,6 +67,6 @@ private:
 	sf::Text mText;
 
 	GamemodeTwoPlayers mGM2P;
-
+	GamemodePlayerBot mGMPB;
 };
 

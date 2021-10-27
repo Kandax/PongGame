@@ -1,6 +1,6 @@
-#include "GamemodeTwoPlayers.h"
+#include "GamemodePlayerBot.h"
 
-GamemodeTwoPlayers::GamemodeTwoPlayers()
+GamemodePlayerBot::GamemodePlayerBot()
 	: mWindowWidth(800)
 	, mWindowHeight(600)
 	, mPlayerLeft()
@@ -17,7 +17,7 @@ GamemodeTwoPlayers::GamemodeTwoPlayers()
 {
 }
 
-GamemodeTwoPlayers::GamemodeTwoPlayers(sf::RenderWindow* window, unsigned int windowWidth, unsigned int windowHeight)
+GamemodePlayerBot::GamemodePlayerBot(sf::RenderWindow* window, unsigned int windowWidth, unsigned int windowHeight)
 	: mWindowWidth(windowWidth)
 	, mWindowHeight(windowHeight)
 	, mWindow(window)
@@ -35,7 +35,7 @@ GamemodeTwoPlayers::GamemodeTwoPlayers(sf::RenderWindow* window, unsigned int wi
 {
 }
 
-void GamemodeTwoPlayers::Init()
+void GamemodePlayerBot::Init()
 {
 	mPlayerRight.getShape()->setFillColor(sf::Color::Red);
 
@@ -60,19 +60,12 @@ void GamemodeTwoPlayers::Init()
 
 
 
-
-	mPowerUp.setTexture("powerUP0.png", PowerUp::none);
-	mPowerUp.setTexture("powerUP1.png", PowerUp::speedUpBall);
-	mPowerUp.setActualPowerUp(PowerUp::none);
-	mPowerUp.setPosition(200, mWindowHeight / 2);
-
 	mBall.update();
 	mPlayerLeft.update();
-	mPlayerRight.update();
-	mPowerUp.update();
+	mPlayerRight.update();	
 }
 
-void GamemodeTwoPlayers::input()
+void GamemodePlayerBot::input()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 		mWindow->close();
@@ -98,9 +91,8 @@ void GamemodeTwoPlayers::input()
 	}
 }
 
-void GamemodeTwoPlayers::updatePhysics(float dt)
+void GamemodePlayerBot::updatePhysics(float dt)
 {
-
 	//if ball touch top or bottom wall, reverse his vertical direction 
 	if (isColliding(mBall.getBoundingBox(), mBBTop) || isColliding(mBall.getBoundingBox(), mBBBottom)) {
 		mBall.setDirection(mBall.getHorizontalDir(), -mBall.getVerticalDir());
@@ -142,39 +134,7 @@ void GamemodeTwoPlayers::updatePhysics(float dt)
 	}
 
 
-	static bool lDidBallCollideWithPowerUP = false;
-	if (isColliding(mBall.getBoundingBox(), mPowerUp.getBoundingBox())) {
-
-		if (!lDidBallCollideWithPowerUP) {
-
-			switch (mPowerUp.getActualPowerUp())
-			{
-			case 0:
-				mBall.resetAcceleration();
-				std::cout << "reset" << std::endl;
-				break;
-			case 1:
-				mPowerUp.powerUpSpeedUpBall(mBall);
-				std::cout << "speed up" << mBall.getAcceleration() << std::endl;
-				break;
-			default:
-				break;
-			}
-
-			int lActualPowerUp = mPowerUp.getActualPowerUp() + 1;
-			if (lActualPowerUp >= PowerUp::powerUps::sizeOfPowerUps)
-				lActualPowerUp = 0;
-
-			mPowerUp.setActualPowerUp(static_cast<PowerUp::powerUps>(lActualPowerUp));
-			mPowerUp.randomPosition(100, mWindowWidth - 100, 0, mWindowHeight - mPowerUp.getBoxSize());
-			lDidBallCollideWithPowerUP = true;
-		}
-
-	}
-	else {
-		lDidBallCollideWithPowerUP = false;
-	}
-
+	
 
 
 
@@ -274,10 +234,9 @@ void GamemodeTwoPlayers::updatePhysics(float dt)
 	if (mBall.getPositionY() + mBall.getSize() > mWindowHeight)
 		mBall.setPosition(mBall.getPositionX(), mWindowHeight - mBall.getSize());
 
-
 }
 
-void GamemodeTwoPlayers::update(float dt)
+void GamemodePlayerBot::update(float dt)
 {
 	mBall.move(mBall.getHorizontalDir() * mBall.getSpeed(), mBall.getVerticalDir() * mBall.getSpeed());
 
@@ -299,12 +258,11 @@ void GamemodeTwoPlayers::update(float dt)
 	mBall.update();
 	mPlayerLeft.update();
 	mPlayerRight.update();
-	mPowerUp.update();
+
 }
 
-void GamemodeTwoPlayers::render()
+void GamemodePlayerBot::render()
 {
-
 	//std::cout <<"Time used: "<<mETime.getTimeUsed()<< " Elapsed Time" << mETime.getElapsedTime() << std::endl;
 	//std::cout << "rand: " << mStartHorizontalDirectionBall << std::endl;
 	//std::cout << "rand: " << mStartVerticalDirectionBall << std::endl;
@@ -324,14 +282,13 @@ void GamemodeTwoPlayers::render()
 	mBall.draw(mWindow);
 	mPlayerLeft.draw(mWindow);
 	mPlayerRight.draw(mWindow);
-	mPowerUp.draw(mWindow);
 
 	mWindow->draw(mScoreTextBlue);
 	mWindow->draw(mScoreTextRed);
 	//mWindow->display();
 }
 
-bool GamemodeTwoPlayers::isColliding(const BoundingBox& firstBoundingBox, const BoundingBox& secondBoundingBox)
+bool GamemodePlayerBot::isColliding(const BoundingBox& firstBoundingBox, const BoundingBox& secondBoundingBox)
 {
 	if (firstBoundingBox.lowerBound.x < secondBoundingBox.upperBound.x && firstBoundingBox.upperBound.x  > secondBoundingBox.lowerBound.x
 		&& firstBoundingBox.lowerBound.y < secondBoundingBox.upperBound.y && firstBoundingBox.upperBound.y  > secondBoundingBox.lowerBound.y) {
@@ -342,14 +299,13 @@ bool GamemodeTwoPlayers::isColliding(const BoundingBox& firstBoundingBox, const 
 	}
 }
 
-void GamemodeTwoPlayers::restart()
+void GamemodePlayerBot::restart()
 {
 	mPlayerLeft.setPosition(0, mWindowHeight / 2 - mPlayerLeft.getHeight() / 2);
 	mPlayerRight.setPosition(mWindowWidth - mPlayerRight.getWitdh(), mWindowHeight / 2 - mPlayerRight.getHeight() / 2);
 	mBall.setPosition(mWindowWidth / 2 - mBall.getSize() / 2, mWindowHeight / 2 - mBall.getSize() / 2);
 	mBall.setDirection(0, 0);
 	mBall.resetAcceleration();
-	mPowerUp.randomPosition(100, mWindowWidth - 100, 0, mWindowHeight - mPowerUp.getBoxSize());
 	mStartHorizontalDirectionBall = bool(rand() % 2);
 
 	mStartVerticalDirectionBall = (rand() % 200 - 100) * 0.01;
@@ -363,5 +319,5 @@ void GamemodeTwoPlayers::restart()
 
 
 	mBall.setSpeed(2);
-	std::cout << "RESTARTED GamemodeTwoPlayers" << std::endl;
+	std::cout << "RESTARTED GamemodePlayerBot" << std::endl;
 }

@@ -12,9 +12,10 @@ Game::Game()
 	, mWindowName("Pong Game")
 	, mWindow(sf::VideoMode(mWindowWidth, mWindowHeight), mWindowName)
 	, mEvent()
-	, mMenuChoice(0)
+	, mMenuChoice(2)
 	, mButton1(mWindowWidth / 2 - 100, 100, 200, 50, "Play")
 	, mGM2P(&mWindow, mWindowWidth,mWindowHeight)
+	, mGMPB(&mWindow, mWindowWidth,mWindowHeight)
 
 {
 	mFont.loadFromFile("fonts\\Roboto-Thin.ttf");
@@ -23,6 +24,7 @@ Game::Game()
 	mText.setPosition(mButton1.posX + 70, mButton1.posY + 5);
 	mButton1.shape.setFillColor(sf::Color::Color(100, 100, 100));
 	mGM2P.Init();
+	mGMPB.Init();
 
 }
 
@@ -74,6 +76,9 @@ void Game::input()
 	case 1:
 		mGM2P.input();
 		break;
+	case 2:
+		mGMPB.input();
+		break;
 
 	default:
 		std::cout << "mMenuChoice out of bounds" << std::endl;
@@ -95,7 +100,9 @@ void Game::updatePhysics()
 	case 1:
 		mGM2P.updatePhysics(mETime.getTimeUsed());
 		break;
-
+	case 2:
+		mGMPB.updatePhysics(mETime.getTimeUsed());
+		break;
 	default:
 		break;
 	}
@@ -113,7 +120,9 @@ void Game::update()
 	case 1:
 		mGM2P.update(mETime.getTimeUsed());
 		break;
-
+	case 2:
+		mGMPB.update(mETime.getTimeUsed());
+		break;
 	default:
 		break;
 	}
@@ -135,7 +144,9 @@ void Game::render()
 	case 1:
 		mGM2P.render();
 		break;
-
+	case 2:
+		mGMPB.render();
+		break;
 	default:
 		break;
 	}
