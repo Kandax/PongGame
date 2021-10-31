@@ -15,6 +15,7 @@ Game::Game()
 	, mMenuChoice(0)
 	, mButton1(mWindowWidth / 2 - 100, 100, 200, 50, "Play")
 	, mButton2(mWindowWidth/2 - 100, 200,200,50,"Bots")
+	, mButton3(mWindowWidth/2 - 100, 300,200,50,"Exit")
 	, mGM2P(&mWindow, mWindowWidth,mWindowHeight)
 	, mGMPB(&mWindow, mWindowWidth,mWindowHeight)
 
@@ -25,6 +26,7 @@ Game::Game()
 	mText.setPosition(mButton1.posX + 70, mButton1.posY + 5);
 	mButton1.shape.setFillColor(sf::Color::Color(100, 100, 100));
 	mButton2.shape.setFillColor(sf::Color::Color(100, 100, 100));
+	mButton3.shape.setFillColor(sf::Color::Color(100, 100, 100));
 	mGM2P.Init();
 	mGMPB.Init();
 
@@ -65,18 +67,30 @@ void Game::events()
 
 void Game::input()
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
+		mMenuChoice = 0;
+	}
+
 
 	switch (mMenuChoice)
 	{
 	case 0:
 		//input menu
+		
+
+
+
 		if (isColliding(mButton1.boundingBox, sf::Mouse::getPosition(mWindow).x, sf::Mouse::getPosition(mWindow).y) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 			std::cout << "button1" << std::endl;
 			mMenuChoice = 1;
 		}
 		if (isColliding(mButton2.boundingBox, sf::Mouse::getPosition(mWindow).x, sf::Mouse::getPosition(mWindow).y) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-			std::cout << "button1" << std::endl;
+			std::cout << "button2" << std::endl;
 			mMenuChoice = 2;
+		}
+		if (isColliding(mButton3.boundingBox, sf::Mouse::getPosition(mWindow).x, sf::Mouse::getPosition(mWindow).y) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+			std::cout << "button3" << std::endl;
+			mMenuChoice = 3;
 		}
 		break;
 	case 1:
@@ -85,7 +99,9 @@ void Game::input()
 	case 2:
 		mGMPB.input();
 		break;
-
+	case 3:
+		mWindow.close();
+		break;
 	default:
 		std::cout << "mMenuChoice out of bounds" << std::endl;
 		break;
@@ -152,6 +168,11 @@ void Game::render()
 		mWindow.draw(mButton2.shape);
 		mText.setString(mButton2.text);
 		mText.setPosition(mButton2.posX + 70, mButton2.posY + 5);
+		mWindow.draw(mText);
+
+		mWindow.draw(mButton3.shape);
+		mText.setString(mButton3.text);
+		mText.setPosition(mButton3.posX + 70, mButton3.posY + 5);
 		mWindow.draw(mText);
 		
 		break;
