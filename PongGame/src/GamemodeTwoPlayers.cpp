@@ -197,7 +197,7 @@ void GamemodeTwoPlayers::updatePhysics(float dt)
 
 	//if ball collide with right player change direction
 	if (isColliding(mBall.getBoundingBox(), mPlayerRight.getBoundingBox())) {
-		std::cout << "cum red :(" << std::endl;
+		std::cout << "red" << std::endl;
 
 		//checking if ball is below of the center of paddle
 		if (mBall.getCenterPosition().y > mPlayerRight.getCenterPosition().y) {//below center of paddle
@@ -234,7 +234,7 @@ void GamemodeTwoPlayers::updatePhysics(float dt)
 
 	//if ball collide with left player change direction
 	if (isColliding(mBall.getBoundingBox(), mPlayerLeft.getBoundingBox())) {
-		std::cout << "cum blue" << std::endl;
+		std::cout << "blue" << std::endl;
 		//ball will teleport in front of the left paddle
 		mBall.setPosition(mPlayerLeft.getShape()->getSize().x, mBall.getPositionY());
 

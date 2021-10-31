@@ -52,7 +52,14 @@ private:
 	sf::Text mScoreTextBlue;
 	sf::Text mScoreTextRed;
 
-	int8_t mPointsBlue;
-	int8_t mPointsRed;
+	int16_t mPointsBlue;
+	int16_t mPointsRed;
+
+	int8_t mBotDir;
+	int8_t mBotDir2;
+
+
+
+
 };
 

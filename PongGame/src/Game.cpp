@@ -12,8 +12,9 @@ Game::Game()
 	, mWindowName("Pong Game")
 	, mWindow(sf::VideoMode(mWindowWidth, mWindowHeight), mWindowName)
 	, mEvent()
-	, mMenuChoice(2)
+	, mMenuChoice(0)
 	, mButton1(mWindowWidth / 2 - 100, 100, 200, 50, "Play")
+	, mButton2(mWindowWidth/2 - 100, 200,200,50,"Bots")
 	, mGM2P(&mWindow, mWindowWidth,mWindowHeight)
 	, mGMPB(&mWindow, mWindowWidth,mWindowHeight)
 
@@ -23,6 +24,7 @@ Game::Game()
 	mText.setString(mButton1.text);
 	mText.setPosition(mButton1.posX + 70, mButton1.posY + 5);
 	mButton1.shape.setFillColor(sf::Color::Color(100, 100, 100));
+	mButton2.shape.setFillColor(sf::Color::Color(100, 100, 100));
 	mGM2P.Init();
 	mGMPB.Init();
 
@@ -71,6 +73,10 @@ void Game::input()
 		if (isColliding(mButton1.boundingBox, sf::Mouse::getPosition(mWindow).x, sf::Mouse::getPosition(mWindow).y) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 			std::cout << "button1" << std::endl;
 			mMenuChoice = 1;
+		}
+		if (isColliding(mButton2.boundingBox, sf::Mouse::getPosition(mWindow).x, sf::Mouse::getPosition(mWindow).y) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+			std::cout << "button1" << std::endl;
+			mMenuChoice = 2;
 		}
 		break;
 	case 1:
@@ -121,7 +127,7 @@ void Game::update()
 		mGM2P.update(mETime.getTimeUsed());
 		break;
 	case 2:
-		mGMPB.update(mETime.getTimeUsed());
+		mGMPB.update(mETime.getElapsedTime());
 		break;
 	default:
 		break;
@@ -138,6 +144,14 @@ void Game::render()
 	case 0:
 		//render menu
 		mWindow.draw(mButton1.shape);
+		mText.setString(mButton1.text);
+		mText.setPosition(mButton1.posX + 70, mButton1.posY + 5);
+		mWindow.draw(mText);
+
+
+		mWindow.draw(mButton2.shape);
+		mText.setString(mButton2.text);
+		mText.setPosition(mButton2.posX + 70, mButton2.posY + 5);
 		mWindow.draw(mText);
 		
 		break;

@@ -76,19 +76,61 @@ void GamemodePlayerBot::input()
 
 
 	//Players movement
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-		mPlayerLeft.move(0, -mPlayerLeft.getSpeed());
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-		mPlayerLeft.move(0, mPlayerLeft.getSpeed());
+
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+	//	mPlayerLeft.move(0, -mPlayerLeft.getSpeed());
+	//}
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+	//	mPlayerLeft.move(0, mPlayerLeft.getSpeed());
+	//}
+
+
+
+	//Bot movement
+	// 
+	// red bot
+	//if ball isnt in the boundries of the right pallete
+	if (!(mPlayerRight.getBoundingBox().lowerBound.y < mBall.getBoundingBox().lowerBound.y && mPlayerRight.getBoundingBox().upperBound.y > mBall.getBoundingBox().upperBound.y)) {
+		
+		//if ball is above the pallete
+		if (mPlayerRight.getBoundingBox().lowerBound.y >= mBall.getBoundingBox().upperBound.y) {
+			mBotDir = -1;
+		}//if ball is below the pallete
+		else if (mPlayerRight.getBoundingBox().upperBound.y < mBall.getBoundingBox().lowerBound.y) {
+			mBotDir = 1;
+		}//bot does nothing
+		else {
+			mBotDir = 0;
+		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
-		mPlayerRight.move(0, -mPlayerLeft.getSpeed());
+	//blue bot
+	//if ball isnt in the boundries of the left pallete
+	if (!(mPlayerLeft.getBoundingBox().lowerBound.y < mBall.getBoundingBox().lowerBound.y && mPlayerLeft.getBoundingBox().upperBound.y > mBall.getBoundingBox().upperBound.y)) {
+		//if ball is above the pallete
+		if (mPlayerLeft.getBoundingBox().lowerBound.y >= mBall.getBoundingBox().upperBound.y) {
+			mBotDir2 = -1;
+		}//if ball is below the pallete
+		else if (mPlayerLeft.getBoundingBox().upperBound.y < mBall.getBoundingBox().lowerBound.y) {
+			mBotDir2 = 1;
+		}//bot does nothing
+		else {
+			mBotDir2 = 0;
+		}
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
-		mPlayerRight.move(0, mPlayerLeft.getSpeed());
-	}
+
+
+	//if (mBall.getPositionY() >= mPlayerLeft.getPositionY()) {
+	//	//mPlayerRight.move(0, mPlayerRight.getSpeed());
+	//	mBotDir2 = 1;
+	//}
+	//else if (mBall.getPositionY() < mPlayerLeft.getPositionY()) {
+	//	//mPlayerRight.move(0, -mPlayerRight.getSpeed());
+	//	mBotDir2 = -1;
+	//}
+	//else {
+	//	mBotDir2 = 0;
+	//}
 }
 
 void GamemodePlayerBot::updatePhysics(float dt)
@@ -157,7 +199,7 @@ void GamemodePlayerBot::updatePhysics(float dt)
 
 	//if ball collide with right player change direction
 	if (isColliding(mBall.getBoundingBox(), mPlayerRight.getBoundingBox())) {
-		std::cout << "cum red :(" << std::endl;
+		std::cout << "red" << std::endl;
 
 		//checking if ball is below of the center of paddle
 		if (mBall.getCenterPosition().y > mPlayerRight.getCenterPosition().y) {//below center of paddle
@@ -194,7 +236,7 @@ void GamemodePlayerBot::updatePhysics(float dt)
 
 	//if ball collide with left player change direction
 	if (isColliding(mBall.getBoundingBox(), mPlayerLeft.getBoundingBox())) {
-		std::cout << "cum blue" << std::endl;
+		std::cout << "blue" << std::endl;
 		//ball will teleport in front of the left paddle
 		mBall.setPosition(mPlayerLeft.getShape()->getSize().x, mBall.getPositionY());
 
@@ -239,6 +281,32 @@ void GamemodePlayerBot::updatePhysics(float dt)
 void GamemodePlayerBot::update(float dt)
 {
 	mBall.move(mBall.getHorizontalDir() * mBall.getSpeed(), mBall.getVerticalDir() * mBall.getSpeed());
+
+	if (mBotDir > 0) {
+		mPlayerRight.move(0, 20);
+	}
+	else if (mBotDir < 0) {
+		mPlayerRight.move(0, -20);
+
+	}
+	else {
+
+		mPlayerRight.move(0, 0);
+	}
+
+	if (mBotDir2 > 0) {
+		mPlayerLeft.move(0, mPlayerLeft.getSpeed());
+	}
+	else if (mBotDir2 < 0) {
+		mPlayerLeft.move(0, -mPlayerLeft.getSpeed());
+
+	}
+	else {
+
+		mPlayerLeft.move(0, 0);
+	}
+
+
 
 
 	//checking if players leaves a boundries

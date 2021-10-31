@@ -62,6 +62,7 @@ private:
 	
 	int mMenuChoice;
 	Button mButton1;
+	Button mButton2;
 
 	sf::Font mFont;
 	sf::Text mText;
