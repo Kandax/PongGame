@@ -16,5 +16,9 @@ This remake contains:
 If you want to go back to the menu you need to press ESCAPE key. SPACE key is for restarting positions
 
 
+Pictures of game:
 
+![menu](https://github.com/Kandax/PongGame/blob/master/ReadMe%20images/Menu.PNG)
+
+![HvH](https://github.com/Kandax/PongGame/blob/master/ReadMe%20images/HvH.PNG)
 
