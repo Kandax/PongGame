@@ -13,7 +13,8 @@ This remake contains:
 
 -Bot vs Bot
 
-If you want to go back to the menu you need to press ESCAPE key
+If you want to go back to the menu you need to press ESCAPE key. SPACE key is for restarting positions
+
 
 
 
