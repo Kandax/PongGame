@@ -1,7 +1,7 @@
 # PongGame
-This is the newest Project
+This is the newest Project. This project was made by using SFML-2.5.1
 
-its remake of the game PONG.
+it is remake of the game PONG, but human vs human mode  have a power ups. For now there is only power ups for accelerating ball and removing this acceleration
 
 This remake contains:
 
@@ -9,9 +9,11 @@ This remake contains:
 
 -Human vs Human
 
+-Human vs Human mode have power ups
+
 -Bot vs Bot
 
-
+If you want to go back to the menu you need to press ESCAPE key
 
 
 
